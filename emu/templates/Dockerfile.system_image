@@ -19,7 +19,7 @@ FROM unzipper as sys_unzipper
 COPY {{system_image_zip}} /tmp/
 RUN unzip -u -o /tmp/{{system_image_zip}} -d /sysimg/
 
-FROM nvidia/opengl:1.2-glvnd-runtime-ubuntu20.04
+FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu22.04
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display
 
 # Now we configure the user account under which we will be running the emulator
