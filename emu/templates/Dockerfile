@@ -17,7 +17,6 @@
 # You can get these by running ./android/scripts/unix/run_tests.sh --verbose --verbose --debs | grep apt | sort -u
 # pulse audio is needed due to some webrtc dependencies.
 RUN apt-get update && \
-    apt-get install -y --only-upgrade --no-install-recommends libc6 libtinfo5 libncurses6 libncurses5 libncursesw6 libncursesw5 ncurses-base ncurses-bin 2>/dev/null || true && \
     apt-get install -y --no-install-recommends \
 # Emulator & video bridge dependencies
     libc6 libdbus-1-3 libfontconfig1 libgcc1 \
@@ -26,6 +25,8 @@ RUN apt-get update && \
     libxext6 libxfixes3 zlib1g libgl1 pulseaudio socat \
 # Enable turncfg through usage of curl
     curl ca-certificates && \
+    dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libc6)" ge "2.35-0ubuntu3.5" && \
+    dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libtinfo5)" ge "6.3-2ubuntu0.1" && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
